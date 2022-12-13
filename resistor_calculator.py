@@ -10,7 +10,7 @@ from kivy.properties import StringProperty
 
 __author__ = 'Nicholas Williams'
 
-RESISTOR_3_VALUES = (1, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2, 9.1, 10)
+RESISTOR_3_VALUES = ("1", "2.2", "2.7", "3.3", "3.9", "4.7", "5.6", "6.8", "8.2", "9.1", "10")
 
 
 class ResistorCalculatorApp(App):
@@ -20,7 +20,7 @@ class ResistorCalculatorApp(App):
     current_resistor_3_value = StringProperty()
 
     def build(self):
-        """Build the Kivy ap from the kv file"""
+        """Build the Kivy app from the kv file"""
         self.title = "Resistor calculator 1.0"
         self.root = Builder.load_file('resistor_calculator.kv')
         self.resistor_3_values = RESISTOR_3_VALUES
@@ -28,6 +28,10 @@ class ResistorCalculatorApp(App):
         return self.root
 
     def calculate_resistance(self, res):
-        return True
+        pass
 
     def display_resistor_colours(self, resistance):
+        pass
+
+
+ResistorCalculatorApp().run()
