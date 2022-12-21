@@ -3,25 +3,42 @@ BoxLayout:
     BoxLayout:
         padding: [10, 10, 10, 10]
         id: band_3_box
+#        BoxLayout:
+#            Spinner:
+#                id: resistor_3_values
+#                text: app.current_resistor_3_value
+#                values: app.resistor_3_values
+#                on_text: app.display_resistor_colours(self.text)
+#        Image:
+#            source: '3_band_resistor.png'
         BoxLayout:
             Spinner:
-                id: resistor_3_values
-                text: app.current_resistor_3_value
-                values: app.resistor_3_values
-                on_text: app.display_resistor_colours(self.text)
-        Image:
-            source: '3_band_resistor.png'
+                id: r3b1  # ID for the first band of a three-band resistor
+                size_hint_x: 0.1
+                values: app.colour_to_rgba
+                on_text: r3b1.background_color = app.return_rgba(r3b1.text)
         BoxLayout:
-
+            Spinner:
+                id: r3b2
+                size_hint_x: 0.1
+                values: app.colour_to_rgba
+                on_text: r3b2.background_color = app.return_rgba(r3b2.text)
         BoxLayout:
-
+            Spinner:
+                id: r3b3
+                size_hint_x: 0.1
+                values: app.colour_to_rgba
+                on_text: r3b3.background_color = app.return_rgba(r3b3.text)
         BoxLayout:
+            Label:
+                id: r3_value
+                text: "Hello!"
 
     BoxLayout:
         padding: [10, 10, 10, 10]
         id: band_4_box
-        Image:
-            source: '4_band_resistor.png'
+#        Image:
+#            source: '4_band_resistor.png'
         BoxLayout:
 
         BoxLayout:
@@ -31,8 +48,8 @@ BoxLayout:
     BoxLayout:
         padding: [10, 10, 10, 10]
         id: band_5_box
-        Image:
-            source: '5_band_resistor.png'
+#        Image:
+#            source: '5_band_resistor.png'
         BoxLayout:
 
         BoxLayout:
@@ -42,8 +59,8 @@ BoxLayout:
     BoxLayout:
         padding: [10, 10, 10, 10]
         id: band_6_box
-        Image:
-            source: '6_band_resistor.png'
+#        Image:
+#            source: '6_band_resistor.png'
         BoxLayout:
 
         BoxLayout:
