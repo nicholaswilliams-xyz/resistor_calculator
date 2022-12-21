@@ -1,8 +1,7 @@
-
 BoxLayout:
-    orientation: 'horizontal'
-
+    orientation: 'vertical'
     BoxLayout:
+        padding: [10, 10, 10, 10]
         id: band_3_box
         BoxLayout:
             Spinner:
@@ -10,6 +9,8 @@ BoxLayout:
                 text: app.current_resistor_3_value
                 values: app.resistor_3_values
                 on_text: app.display_resistor_colours(self.text)
+        Image:
+            source: '3_band_resistor.png'
         BoxLayout:
 
         BoxLayout:
@@ -17,7 +18,10 @@ BoxLayout:
         BoxLayout:
 
     BoxLayout:
+        padding: [10, 10, 10, 10]
         id: band_4_box
+        Image:
+            source: '4_band_resistor.png'
         BoxLayout:
 
         BoxLayout:
@@ -25,7 +29,10 @@ BoxLayout:
         BoxLayout:
 
     BoxLayout:
+        padding: [10, 10, 10, 10]
         id: band_5_box
+        Image:
+            source: '5_band_resistor.png'
         BoxLayout:
 
         BoxLayout:
@@ -33,7 +40,10 @@ BoxLayout:
         BoxLayout:
 
     BoxLayout:
+        padding: [10, 10, 10, 10]
         id: band_6_box
+        Image:
+            source: '6_band_resistor.png'
         BoxLayout:
 
         BoxLayout:

@@ -5,6 +5,7 @@ Currently works with Python interpreter 3.10
 
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.properties import ObjectProperty
 from kivy.properties import ListProperty
 from kivy.properties import StringProperty
 
