@@ -15,21 +15,21 @@ BoxLayout:
             Spinner:
                 id: r3b1  # ID for the first band of a three-band resistor
                 size_hint_x: 0.1
-                values: app.colour_to_rgba[0:10]  # Show all colours but gold and silver for first three bands
+                values: app.colour_to_details[0:10]  # Show all colours but gold and silver for first three bands
                 on_text: r3b1.background_color = app.return_rgba(r3b1.text)
                 on_background_color: app.calculate_resistance()
         BoxLayout:
             Spinner:
                 id: r3b2
                 size_hint_x: 0.1
-                values: app.colour_to_rgba[0:10]
+                values: app.colour_to_details[0:10]
                 on_text: r3b2.background_color = app.return_rgba(r3b2.text)
                 on_background_color: app.calculate_resistance()
         BoxLayout:
             Spinner:
                 id: r3b3
                 size_hint_x: 0.1
-                values: app.colour_to_rgba[0:10]
+                values: app.colour_to_details[0:10]
                 on_text: r3b3.background_color = app.return_rgba(r3b3.text)
                 on_background_color: app.calculate_resistance()
         BoxLayout:
