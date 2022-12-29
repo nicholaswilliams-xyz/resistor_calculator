@@ -9,8 +9,11 @@ BoxLayout:
 #                text: app.current_resistor_3_value
 #                values: app.resistor_3_values
 #                on_text: app.display_resistor_colours(self.text)
-#        Image:
-#            source: '3_band_resistor.png'
+        BoxLayout:
+            size_hint_x: 0.15
+            Label:
+                text: "3"
+                font_size: 36
         BoxLayout:
             orientation: 'vertical'
             Label:
@@ -20,7 +23,7 @@ BoxLayout:
                 id: r3b1  # ID for the first band of a three-band resistor
                 values: app.colour_to_details[0:10]  # Show all colours but gold and silver for first three bands
                 on_text: r3b1.background_color = app.return_rgba(r3b1.text)
-                on_background_color: app.calculate_resistance()
+                on_background_color: app.calculate_resistance(3)
         BoxLayout:
             orientation: 'vertical'
             Label:
@@ -30,7 +33,7 @@ BoxLayout:
                 id: r3b2
                 values: app.colour_to_details[0:10]
                 on_text: r3b2.background_color = app.return_rgba(r3b2.text)
-                on_background_color: app.calculate_resistance()
+                on_background_color: app.calculate_resistance(3)
         BoxLayout:
             orientation: 'vertical'
             Label:
@@ -38,9 +41,9 @@ BoxLayout:
                 size_hint_y: 0.2
             Spinner:
                 id: r3b3
-                values: app.colour_to_details[0:10]
+                values: app.colour_to_details
                 on_text: r3b3.background_color = app.return_rgba(r3b3.text)
-                on_background_color: app.calculate_resistance()
+                on_background_color: app.calculate_resistance(3)
         BoxLayout:
             Label:
                 id: r3_value
@@ -49,13 +52,55 @@ BoxLayout:
     BoxLayout:
         padding: [10, 10, 10, 10]
         id: band_4_box
-#        Image:
-#            source: '4_band_resistor.png'
         BoxLayout:
-
+            size_hint_x: 0.15
+            Label:
+                text: "4"
+                font_size: 36
         BoxLayout:
-
+            orientation: 'vertical'
+            Label:
+                size_hint_y: 0.2
+                text: "Digit 1"
+            Spinner:
+                id: r4b1
+                values: app.colour_to_details[0:10]  # Show all colours but gold and silver for first three bands
+                on_text: r4b1.background_color = app.return_rgba(r4b1.text)
+                on_background_color: app.calculate_resistance(4)
         BoxLayout:
+            orientation: 'vertical'
+            Label:
+                size_hint_y: 0.2
+                text: "Digit 2"
+            Spinner:
+                id: r4b2
+                values: app.colour_to_details[0:10]
+                on_text: r4b2.background_color = app.return_rgba(r4b2.text)
+                on_background_color: app.calculate_resistance(4)
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                size_hint_y: 0.2
+                text: "Multiplier"
+            Spinner:
+                id: r4b3
+                values: app.colour_to_details
+                on_text: r4b3.background_color = app.return_rgba(r4b3.text)
+                on_background_color: app.calculate_resistance(4)
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "Tolerance"
+                size_hint_y: 0.2
+            Spinner:
+                id: r4b4
+                values: app.colour_to_details
+                on_text: r4b4.background_color = app.return_rgba(r4b4.text)
+                on_background_color: app.calculate_resistance(4)
+        BoxLayout:
+            Label:
+                id: r4_value
+                text: "Hello!"
 
     BoxLayout:
         padding: [10, 10, 10, 10]
