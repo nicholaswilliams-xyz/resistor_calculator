@@ -110,19 +110,19 @@ class ResistorCalculatorApp(App):
             try:
                 return COLOUR_TO_MULTIPLIER[colour_name][0]
             except KeyError:
-                return f"{colour_name} is not a key in the 'colour_to_digit' dictionary."
+                return f"{colour_name} is not a key in the 'colour_to_multiplier' dictionary."
 
         if band_type == "tolerance":
             try:
                 return COLOUR_TO_TOLERANCE[colour_name][0]
             except KeyError:
-                return f"{colour_name} is not a key in the 'colour_to_digit' dictionary."
+                return f"{colour_name} is not a key in the 'colour_to_tolerance' dictionary."
 
         if band_type == "temp_co":
             try:
-                return COLOUR_TO_TOLERANCE[colour_name][0]
+                return COLOUR_TO_TEMP_CO[colour_name][0]
             except KeyError:
-                return f"{colour_name} is not a key in the 'colour_to_digit' dictionary."
+                return f"{colour_name} is not a key in the 'colour_to_temp_co' dictionary."
 
     def calculate_resistance(self, number_of_bands):
         if number_of_bands == 3:

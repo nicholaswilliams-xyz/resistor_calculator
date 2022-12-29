@@ -21,7 +21,7 @@ BoxLayout:
                 text: "Digit 1"
             Spinner:
                 id: r3b1  # ID for the first band of a three-band resistor
-                values: app.colour_to_digit[0:10]  # Show all colours but gold and silver for first three bands
+                values: app.colour_to_digit
                 on_text: r3b1.background_color = app.return_band_colour("digit", r3b1.text)
                 on_background_color: app.calculate_resistance(3)
         BoxLayout:
@@ -31,7 +31,7 @@ BoxLayout:
                 text: "Digit 2"
             Spinner:
                 id: r3b2
-                values: app.colour_to_digit[0:10]
+                values: app.colour_to_digit
                 on_text: r3b2.background_color = app.return_band_colour("digit", r3b2.text)
                 on_background_color: app.calculate_resistance(3)
         BoxLayout:
@@ -69,7 +69,7 @@ BoxLayout:
                 text: "Digit 1"
             Spinner:
                 id: r4b1
-                values: app.colour_to_digit[0:10]  # Show all colours but gold and silver for first three bands
+                values: app.colour_to_digit
                 on_text: r4b1.background_color = app.return_band_colour("digit", r4b1.text)
                 on_background_color: app.calculate_resistance(4)
         BoxLayout:
@@ -79,7 +79,7 @@ BoxLayout:
                 text: "Digit 2"
             Spinner:
                 id: r4b2
-                values: app.colour_to_digit[0:10]
+                values: app.colour_to_digit
                 on_text: r4b2.background_color = app.return_band_colour("digit", r4b2.text)
                 on_background_color: app.calculate_resistance(4)
         BoxLayout:
@@ -114,13 +114,68 @@ BoxLayout:
     BoxLayout:
         padding: [10, 10, 10, 10]
         id: band_5_box
-#        Image:
-#            source: '5_band_resistor.png'
         BoxLayout:
+            size_hint_x: 0.15
+            Label:
+                text: "5 "
+                font_size: 36
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                size_hint_y: 0.2
+                text: "Digit 1"
+            Spinner:
+                id: r5b1
+                values: app.colour_to_digit
+                on_text: r5b1.background_color = app.return_band_colour("digit", r5b1.text)
+                on_background_color: app.calculate_resistance(5)
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                size_hint_y: 0.2
+                text: "Digit 2"
+            Spinner:
+                id: r5b2
+                values: app.colour_to_digit
+                on_text: r5b2.background_color = app.return_band_colour("digit", r5b2.text)
+                on_background_color: app.calculate_resistance(5)
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                size_hint_y: 0.2
+                text: "Digit 3"
+            Spinner:
+                id: r5b3
+                values: app.colour_to_digit
+                on_text: r5b3.background_color = app.return_band_colour("digit", r5b3.text)
+                on_background_color: app.calculate_resistance(5)
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                size_hint_y: 0.2
+                text: "Multiplier"
+            Spinner:
+                id: r5b4
+                values: app.colour_to_multiplier
+                on_text: r5b4.background_color = app.return_band_colour("multiplier", r5b4.text)
+                on_background_color: app.calculate_resistance(5)
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "Tolerance"
+                size_hint_y: 0.2
+            Spinner:
+                id: r5b5
+                values: app.colour_to_tolerance
+                on_text: r5b5.background_color = app.return_band_colour("tolerance", r5b5.text)
+                on_background_color: app.calculate_resistance(5)
 
         BoxLayout:
 
         BoxLayout:
+            Label:
+                id: r5_value
+                text: "Hello!"
 
     BoxLayout:
         padding: [10, 10, 10, 10]
