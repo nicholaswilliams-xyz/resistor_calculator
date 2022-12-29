@@ -19,16 +19,86 @@ RESISTOR_3_VALUES = ("1", "2.2", "2.7", "3.3", "3.9", "4.7", "5.6", "6.8", "8.2"
 # Example:         | "Black"    | (0, 0, 0, 1)     | 0     | N/A       | N/A
 # Example:         | "Yellow"   | (1, 1, 0, 1)     | 4     | 0.04      | 25
 # Multiplier value is not needed, as multiplier = 10^digit
-COLOUR_TO_DETAILS = {"0 Black": ((0, 0, 0, 1), 0),
+# COLOUR_TO_DETAILS = {"0 Black": ((0, 0, 0, 1), 0),
+#                          "1 Brown": ((1.5, 0.9, 0.5, 1), 1, 0.01, 100),
+#                          "2 Red": ((255, 0, 0, 1), 2, 0.02, 50),
+#                          "3 Orange": ((2.5, 1.2, 0, 1), 3, 0.03, 15),
+#                          "4 Yellow": ((255, 255, 0, 1), 4, 0.04, 25),
+#                          "5 Green": ((0, 255, 0, 1), 5, 0.005),
+#                          "6 Blue": ((0, 0, 255, 1), 6, 0.0025, 10),
+#                          "7 Violet": ((128, 0, 128, 1), 7, 0.001, 5),
+#                          "8 Grey": ((1, 1, 1, 1), 8, 0.0005),
+#                          "9 White": ((255, 255, 255, 1), 9)}
+
+COLOUR_TO_FIRST_DIGIT = {"0 Black": ((0, 0, 0, 1), 0),
+                         "1 Brown": ((1.5, 0.9, 0.5, 1), 1),
+                         "2 Red": ((255, 0, 0, 1), 2),
+                         "3 Orange": ((2.5, 1.2, 0, 1), 3),
+                         "4 Yellow": ((255, 255, 0, 1), 4),
+                         "5 Green": ((0, 255, 0, 1), 5),
+                         "6 Blue": ((0, 0, 255, 1), 6),
+                         "7 Violet": ((128, 0, 128, 1), 7),
+                         "8 Grey": ((1, 1, 1, 1), 8),
+                         "9 White": ((255, 255, 255, 1), 9)}
+
+COLOUR_TO_SECOND_DIGIT = {"0 Black": ((0, 0, 0, 1), 0),
+                         "1 Brown": ((1.5, 0.9, 0.5, 1), 1, 0.01, 100),
+                         "2 Red": ((255, 0, 0, 1), 2, 0.02, 50),
+                         "3 Orange": ((2.5, 1.2, 0, 1), 3, 0.03, 15),
+                         "4 Yellow": ((255, 255, 0, 1), 4, 0.04, 25),
+                         "5 Green": ((0, 255, 0, 1), 5, 0.005),
+                         "6 Blue": ((0, 0, 255, 1), 6, 0.0025, 10),
+                         "7 Violet": ((128, 0, 128, 1), 7, 0.001, 5),
+                         "8 Grey": ((1, 1, 1, 1), 8, 0.0005),
+                         "9 White": ((255, 255, 255, 1), 9)}
+
+COLOUR_TO_THIRD_DIGIT = {"0 Black": ((0, 0, 0, 1), 0),
+                         "1 Brown": ((1.5, 0.9, 0.5, 1), 1, 0.01, 100),
+                         "2 Red": ((255, 0, 0, 1), 2, 0.02, 50),
+                         "3 Orange": ((2.5, 1.2, 0, 1), 3, 0.03, 15),
+                         "4 Yellow": ((255, 255, 0, 1), 4, 0.04, 25),
+                         "5 Green": ((0, 255, 0, 1), 5, 0.005),
+                         "6 Blue": ((0, 0, 255, 1), 6, 0.0025, 10),
+                         "7 Violet": ((128, 0, 128, 1), 7, 0.001, 5),
+                         "8 Grey": ((1, 1, 1, 1), 8, 0.0005),
+                         "9 White": ((255, 255, 255, 1), 9)}
+
+COLOUR_TO_MULTIPLIER = {"0 Black": ((0, 0, 0, 1), 0),
+                        "1 Brown": ((1.5, 0.9, 0.5, 1), 1),
+                        "2 Red": ((255, 0, 0, 1), 2),
+                        "3 Orange": ((2.5, 1.2, 0, 1), 3),
+                        "4 Yellow": ((255, 255, 0, 1), 4),
+                        "5 Green": ((0, 255, 0, 1), 5),
+                        "6 Blue": ((0, 0, 255, 1), 6),
+                        "7 Violet": ((128, 0, 128, 1), 7),
+                        "8 Grey": ((1, 1, 1, 1), 8),
+                        "9 White": ((255, 255, 255, 1), 9),
+                        "Gold": ((1, 215 / 255, 0, 1), -1),
+                        "Silver": ((192 / 255, 192 / 255, 192 / 255, 1), -2)}
+
+COLOUR_TO_TOLERANCE = {"1 Brown": ((1.5, 0.9, 0.5, 1), 0.01),
+                       "2 Red": ((255, 0, 0, 1), 0.02),
+                       "3 Orange": ((2.5, 1.2, 0, 1), 0.03),
+                       "4 Yellow": ((255, 255, 0, 1), 0.04),
+                       "0.5 Green": ((0, 255, 0, 1), 0.005),
+                       "0.25 Blue": ((0, 0, 255, 1), 0.0025),
+                       "0.1 Violet": ((128, 0, 128, 1), 0.001),
+                       "0.05 Grey": ((1, 1, 1, 1), 0.0005),
+                       "5 Gold": ((1, 215 / 255, 0, 1), 0.05),
+                       "10 Silver": ((192 / 255, 192 / 255, 192 / 255, 1), 0.1)}
+
+COLOUR_TO_TEMP_CO = {"0 Black": ((0, 0, 0, 1), 0),
                      "1 Brown": ((1.5, 0.9, 0.5, 1), 1, 0.01, 100),
                      "2 Red": ((255, 0, 0, 1), 2, 0.02, 50),
-                     "3 Orange": ((255, 165, 0, 1), 3, 0.03, 15),
+                     "3 Orange": ((2.5, 1.2, 0, 1), 3, 0.03, 15),
                      "4 Yellow": ((255, 255, 0, 1), 4, 0.04, 25),
                      "5 Green": ((0, 255, 0, 1), 5, 0.005),
                      "6 Blue": ((0, 0, 255, 1), 6, 0.0025, 10),
                      "7 Violet": ((128, 0, 128, 1), 7, 0.001, 5),
                      "8 Grey": ((1, 1, 1, 1), 8, 0.0005),
-                     "9 White": ((255, 255, 255, 1), 9)}
+                     "9 White": ((255, 255, 255, 1), 9),
+                     "Gold": ((1, 215 / 255, 0, 1), 0.1, 0.05),
+                     "Silver": ((192 / 255, 192 / 255, 192 / 255, 1), 0.01, 0.1)}
 
 # Gold and Silver have only multiplier and tolerance purposes and hence their own dictionary
 GOLD_SILVER_TO_DETAILS = {"Gold": ((1, 215 / 255, 0, 1), 0.1, 0.05),
@@ -55,16 +125,26 @@ class ResistorCalculatorApp(App):
         except KeyError:
             return f"{colour_name} is not a key in the 'colour_to_details' dictionary."
 
-    def calculate_resistance(self):
-        if self.root.ids.r3b1.text != '' and self.root.ids.r3b2.text != '' and self.root.ids.r3b3.text != '':
+    def calculate_resistance(self, number_of_bands):
+        if number_of_bands == 3:
+            if self.root.ids.r3b1.text != '' and self.root.ids.r3b2.text != '' and self.root.ids.r3b3.text != '':
+                resistance = int(str(COLOUR_TO_DETAILS[self.root.ids.r3b1.text][1]) +
+                                 str(COLOUR_TO_DETAILS[self.root.ids.r3b2.text][1])) * \
+                             pow(10, COLOUR_TO_DETAILS[self.root.ids.r3b3.text][1])
 
-            resistance = int(str(COLOUR_TO_DETAILS[self.root.ids.r3b1.text][1]) +
-                             str(COLOUR_TO_DETAILS[self.root.ids.r3b2.text][1])) * \
-                         pow(10, COLOUR_TO_DETAILS[self.root.ids.r3b3.text][1])
+                self.root.ids.r3_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
+                                              f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
+                                              f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}"
 
-            self.root.ids.r3_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
-                                          f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
-                                          f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}"
+        if number_of_bands == 4:
+            if self.root.ids.r4b1.text != '' and self.root.ids.r4b2.text != '' and self.root.ids.r4b3.text != '':
+                resistance = int(str(COLOUR_TO_DETAILS[self.root.ids.r4b1.text][1]) +
+                                 str(COLOUR_TO_DETAILS[self.root.ids.r4b2.text][1])) * \
+                             pow(10, COLOUR_TO_DETAILS[self.root.ids.r4b3.text][1])
+
+                self.root.ids.r4_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
+                                              f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
+                                              f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}"
 
     def display_resistor_colours(self, resistance):
         pass
