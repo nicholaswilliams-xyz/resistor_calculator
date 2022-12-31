@@ -129,7 +129,7 @@ class ResistorCalculatorApp(App):
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
                                               f"\n\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r4b4.text != '' else ''}" \
-                                              f"\n{str(self.format_resistance(resistance)[0] * (1 - tolerance)) + ' - ' + str(self.format_resistance(resistance)[0] * (1 + tolerance)) + self.format_resistance(resistance)[1] if self.root.ids.r4b4.text != '' else ''}"
+                                              f"\n{str(round(self.format_resistance(resistance)[0] * (1 - tolerance), 10)) + ' - ' + str(round(self.format_resistance(resistance)[0] * (1 + tolerance), 10)) + self.format_resistance(resistance)[1] if self.root.ids.r4b4.text != '' else ''}"
         if number_of_bands == 5:
             if self.root.ids.r5b1.text != '' and self.root.ids.r5b2.text != '' and self.root.ids.r5b3.text != '' and self.root.ids.r5b4.text != '':
                 resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r5b1.text][1]) +
@@ -145,7 +145,7 @@ class ResistorCalculatorApp(App):
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
                                               f"\n\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r5b5.text != '' else ''}" \
-                                              f"\n{str(self.format_resistance(resistance)[0] * (1 - tolerance)) + ' - ' + str(self.format_resistance(resistance)[0] * (1 + tolerance)) + self.format_resistance(resistance)[1] if self.root.ids.r5b5.text != '' else ''}"
+                                              f"\n{str(round(self.format_resistance(resistance)[0] * (1 - tolerance), 10)) + ' - ' + str(round(self.format_resistance(resistance)[0] * (1 + tolerance), 10)) + self.format_resistance(resistance)[1] if self.root.ids.r5b5.text != '' else ''}"
         if number_of_bands == 6:
             if self.root.ids.r6b1.text != '' and self.root.ids.r6b2.text != '' and self.root.ids.r6b3.text != '' and self.root.ids.r6b4.text != '':
                 resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r6b1.text][1]) +
@@ -165,7 +165,7 @@ class ResistorCalculatorApp(App):
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
                                               f"\n\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r6b5.text != '' else ''}" \
-                                              f"\n{str(self.format_resistance(resistance)[0] * (1 - tolerance)) + ' - ' + str(self.format_resistance(resistance)[0] * (1 + tolerance)) + self.format_resistance(resistance)[1] if self.root.ids.r6b5.text != '' else ''}" \
+                                              f"\n{str(round(self.format_resistance(resistance)[0] * (1 - tolerance), 10)) + ' - ' + str(round(self.format_resistance(resistance)[0] * (1 + tolerance), 10)) + self.format_resistance(resistance)[1] if self.root.ids.r6b5.text != '' else ''}" \
                                               f"\n\n{str(temp_co) + ' ppm/°C' if self.root.ids.r6b6.text != '' else ''}"
 
     def format_resistance(self, resistance):
