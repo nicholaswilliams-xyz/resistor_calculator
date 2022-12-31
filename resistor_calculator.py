@@ -8,27 +8,11 @@ from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.properties import ListProperty
 from kivy.properties import StringProperty
+from kivy.core.window import Window
 
 __author__ = 'Nicholas Williams'
 
 RESISTOR_3_VALUES = ("1", "2.2", "2.7", "3.3", "3.9", "4.7", "5.6", "6.8", "8.2", "9.1", "10")
-
-# Format for RGBA: | Color name | RGBA counterpart | digit | Tolerance | Temperature Coefficient
-#                  | English    | tuple            | 0 - 9 | decimal   |
-
-# Example:         | "Black"    | (0, 0, 0, 1)     | 0     | N/A       | N/A
-# Example:         | "Yellow"   | (1, 1, 0, 1)     | 4     | 0.04      | 25
-# Multiplier value is not needed, as multiplier = 10^digit
-# COLOUR_TO_DETAILS = {"0 Black": ((0, 0, 0, 1), 0),
-#                          "1 Brown": ((1.5, 0.9, 0.5, 1), 1, 0.01, 100),
-#                          "2 Red": ((255, 0, 0, 1), 2, 0.02, 50),
-#                          "3 Orange": ((2.5, 1.2, 0, 1), 3, 0.03, 15),
-#                          "4 Yellow": ((255, 255, 0, 1), 4, 0.04, 25),
-#                          "5 Green": ((0, 255, 0, 1), 5, 0.005),
-#                          "6 Blue": ((0, 0, 255, 1), 6, 0.0025, 10),
-#                          "7 Violet": ((128, 0, 128, 1), 7, 0.001, 5),
-#                          "8 Grey": ((1, 1, 1, 1), 8, 0.0005),
-#                          "9 White": ((255, 255, 255, 1), 9)}
 
 COLOUR_TO_DIGIT = {"0 Black": ((0, 0, 0, 1), 0),
                    "1 Brown": ((1.5, 0.9, 0.5, 1), 1),
@@ -65,17 +49,12 @@ COLOUR_TO_TOLERANCE = {"1 Brown": ((1.5, 0.9, 0.5, 1), 0.01),
                        "5 Gold": ((1, 215 / 255, 0, 1), 0.05),
                        "10 Silver": ((192 / 255, 192 / 255, 192 / 255, 1), 0.1)}
 
-COLOUR_TO_TEMP_CO = {"100 Brown": ((1.5, 0.9, 0.5, 1), 1, 0.01, 100),
-                     "50 Red": ((255, 0, 0, 1), 2, 0.02, 50),
-                     "15 Orange": ((2.5, 1.2, 0, 1), 3, 0.03, 15),
-                     "25 Yellow": ((255, 255, 0, 1), 4, 0.04, 25),
-                     "10 Blue": ((0, 0, 255, 1), 6, 0.0025, 10),
-                     "5 Violet": ((128, 0, 128, 1), 7, 0.001, 5)}
-
-
-# Gold and Silver have only multiplier and tolerance purposes and hence their own dictionary
-# GOLD_SILVER_TO_DETAILS = {"Gold": ((1, 215 / 255, 0, 1), 0.1, 0.05),
-#                           "Silver": ((192 / 255, 192 / 255, 192 / 255, 1), 0.01, 0.1)}
+COLOUR_TO_TEMP_CO = {"100 Brown": ((1.5, 0.9, 0.5, 1), 100),
+                     "50 Red": ((255, 0, 0, 1), 50),
+                     "15 Orange": ((2.5, 1.2, 0, 1), 15),
+                     "25 Yellow": ((255, 255, 0, 1), 25),
+                     "10 Blue": ((0, 0, 255, 1), 10),
+                     "5 Violet": ((128, 0, 128, 1), 5)}
 
 
 class ResistorCalculatorApp(App):
@@ -96,6 +75,7 @@ class ResistorCalculatorApp(App):
         self.colour_to_multiplier = COLOUR_TO_MULTIPLIER
         self.colour_to_tolerance = COLOUR_TO_TOLERANCE
         self.colour_to_temp_co = COLOUR_TO_TEMP_CO
+        Window.size = (1000, 900)
 
         return self.root
 
@@ -148,7 +128,7 @@ class ResistorCalculatorApp(App):
                 self.root.ids.r4_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
-                                              f"\n{str(tolerance * 100) + '%' if self.root.ids.r4b4.text != '' else ''}" \
+                                              f"\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r4b4.text != '' else ''}" \
                                               f"\n{str(int(resistance * (1 - tolerance))) + ' - ' + str(int(resistance * (1 + tolerance))) + ' Ω' if self.root.ids.r4b4.text != '' else ''}"
 
         if number_of_bands == 5:
@@ -165,7 +145,7 @@ class ResistorCalculatorApp(App):
                 self.root.ids.r5_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
-                                              f"\n{str(tolerance * 100) + '%' if self.root.ids.r5b5.text != '' else ''}" \
+                                              f"\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r5b5.text != '' else ''}" \
                                               f"\n{str(int(resistance * (1 - tolerance))) + ' - ' + str(int(resistance * (1 + tolerance))) + ' Ω' if self.root.ids.r5b5.text != '' else ''}"
 
         if number_of_bands == 6:
@@ -186,8 +166,9 @@ class ResistorCalculatorApp(App):
                 self.root.ids.r6_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
-                                              f"\n{str(tolerance * 100) + '%' if self.root.ids.r6b5.text != '' else ''}" \
-                                              f"\n{str(int(resistance * (1 - tolerance))) + ' - ' + str(int(resistance * (1 + tolerance))) + ' Ω' if self.root.ids.r6b5.text != '' else ''}"
+                                              f"\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r6b5.text != '' else ''}" \
+                                              f"\n{str(int(resistance * (1 - tolerance))) + ' - ' + str(int(resistance * (1 + tolerance))) + ' Ω' if self.root.ids.r6b5.text != '' else ''}" \
+                                              f"\n{str(temp_co) + ' ppm/°C' if self.root.ids.r6b6.text != '' else ''}"
 
     def display_resistor_colours(self, resistance):
         pass
