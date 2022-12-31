@@ -35,8 +35,8 @@ COLOUR_TO_MULTIPLIER = {"0 Black": ((0, 0, 0, 1), 0),
                         "7 Violet": ((128, 0, 128, 1), 7),
                         "8 Grey": ((1, 1, 1, 1), 8),
                         "9 White": ((255, 255, 255, 1), 9),
-                        "Gold": ((1, 215 / 255, 0, 1), -1),
-                        "Silver": ((192 / 255, 192 / 255, 192 / 255, 1), -2)}
+                        "-1 Gold": ((1, 215 / 255, 0, 1), -1),
+                        "-2 Silver": ((192 / 255, 192 / 255, 192 / 255, 1), -2)}
 
 COLOUR_TO_TOLERANCE = {"1 Brown": ((1.5, 0.9, 0.5, 1), 0.01),
                        "2 Red": ((255, 0, 0, 1), 0.02),
@@ -75,7 +75,7 @@ class ResistorCalculatorApp(App):
         self.colour_to_multiplier = COLOUR_TO_MULTIPLIER
         self.colour_to_tolerance = COLOUR_TO_TOLERANCE
         self.colour_to_temp_co = COLOUR_TO_TEMP_CO
-        Window.size = (1000, 900)
+        Window.size = (1200, 1000)
 
         return self.root
 
@@ -109,9 +109,9 @@ class ResistorCalculatorApp(App):
             if self.root.ids.r3b1.text != '' and self.root.ids.r3b2.text != '' and self.root.ids.r3b3.text != '':
                 resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r3b1.text][1]) +
                                  str(COLOUR_TO_DIGIT[self.root.ids.r3b2.text][1])) * \
-                             pow(10, COLOUR_TO_DIGIT[self.root.ids.r3b3.text][1])
+                             pow(10, COLOUR_TO_MULTIPLIER[self.root.ids.r3b3.text][1])
 
-                self.root.ids.r3_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
+                self.root.ids.r3_value.text = f"\n{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}"
 
@@ -119,41 +119,39 @@ class ResistorCalculatorApp(App):
             if self.root.ids.r4b1.text != '' and self.root.ids.r4b2.text != '' and self.root.ids.r4b3.text != '':
                 resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r4b1.text][1]) +
                                  str(COLOUR_TO_DIGIT[self.root.ids.r4b2.text][1])) * \
-                             pow(10, COLOUR_TO_DIGIT[self.root.ids.r4b3.text][1])
+                             pow(10, COLOUR_TO_MULTIPLIER[self.root.ids.r4b3.text][1])
 
                 tolerance = 0
                 if self.root.ids.r4b4.text != '':
                     tolerance = COLOUR_TO_TOLERANCE[self.root.ids.r4b4.text][1]
 
-                self.root.ids.r4_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
+                self.root.ids.r4_value.text = f"\n{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
-                                              f"\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r4b4.text != '' else ''}" \
-                                              f"\n{str(int(resistance * (1 - tolerance))) + ' - ' + str(int(resistance * (1 + tolerance))) + ' Ω' if self.root.ids.r4b4.text != '' else ''}"
-
+                                              f"\n\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r4b4.text != '' else ''}" \
+                                              f"\n{str(self.format_resistance(resistance)[0] * (1 - tolerance)) + ' - ' + str(self.format_resistance(resistance)[0] * (1 + tolerance)) + self.format_resistance(resistance)[1] if self.root.ids.r4b4.text != '' else ''}"
         if number_of_bands == 5:
             if self.root.ids.r5b1.text != '' and self.root.ids.r5b2.text != '' and self.root.ids.r5b3.text != '' and self.root.ids.r5b4.text != '':
                 resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r5b1.text][1]) +
                                  str(COLOUR_TO_DIGIT[self.root.ids.r5b2.text][1]) +
                                  str(COLOUR_TO_DIGIT[self.root.ids.r5b3.text][1])) * \
-                             pow(10, COLOUR_TO_DIGIT[self.root.ids.r5b4.text][1])
+                             pow(10, COLOUR_TO_MULTIPLIER[self.root.ids.r5b4.text][1])
 
                 tolerance = 0
                 if self.root.ids.r5b5.text != '':
                     tolerance = COLOUR_TO_TOLERANCE[self.root.ids.r5b5.text][1]
 
-                self.root.ids.r5_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
+                self.root.ids.r5_value.text = f"\n{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
-                                              f"\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r5b5.text != '' else ''}" \
-                                              f"\n{str(int(resistance * (1 - tolerance))) + ' - ' + str(int(resistance * (1 + tolerance))) + ' Ω' if self.root.ids.r5b5.text != '' else ''}"
-
+                                              f"\n\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r5b5.text != '' else ''}" \
+                                              f"\n{str(self.format_resistance(resistance)[0] * (1 - tolerance)) + ' - ' + str(self.format_resistance(resistance)[0] * (1 + tolerance)) + self.format_resistance(resistance)[1] if self.root.ids.r5b5.text != '' else ''}"
         if number_of_bands == 6:
             if self.root.ids.r6b1.text != '' and self.root.ids.r6b2.text != '' and self.root.ids.r6b3.text != '' and self.root.ids.r6b4.text != '':
                 resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r6b1.text][1]) +
                                  str(COLOUR_TO_DIGIT[self.root.ids.r6b2.text][1]) +
                                  str(COLOUR_TO_DIGIT[self.root.ids.r6b3.text][1])) * \
-                             pow(10, COLOUR_TO_DIGIT[self.root.ids.r6b4.text][1])
+                             pow(10, COLOUR_TO_MULTIPLIER[self.root.ids.r6b4.text][1])
 
                 tolerance = 0
                 if self.root.ids.r6b5.text != '':
@@ -163,15 +161,27 @@ class ResistorCalculatorApp(App):
                 if self.root.ids.r6b6.text != '':
                     temp_co = COLOUR_TO_TEMP_CO[self.root.ids.r6b6.text][1]
 
-                self.root.ids.r6_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
+                self.root.ids.r6_value.text = f"\n{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
-                                              f"\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r6b5.text != '' else ''}" \
-                                              f"\n{str(int(resistance * (1 - tolerance))) + ' - ' + str(int(resistance * (1 + tolerance))) + ' Ω' if self.root.ids.r6b5.text != '' else ''}" \
-                                              f"\n{str(temp_co) + ' ppm/°C' if self.root.ids.r6b6.text != '' else ''}"
+                                              f"\n\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r6b5.text != '' else ''}" \
+                                              f"\n{str(self.format_resistance(resistance)[0] * (1 - tolerance)) + ' - ' + str(self.format_resistance(resistance)[0] * (1 + tolerance)) + self.format_resistance(resistance)[1] if self.root.ids.r6b5.text != '' else ''}" \
+                                              f"\n\n{str(temp_co) + ' ppm/°C' if self.root.ids.r6b6.text != '' else ''}"
 
-    def display_resistor_colours(self, resistance):
-        pass
+    def format_resistance(self, resistance):
+        resistance = int(resistance)
+        if resistance < 1000:
+            abbreviation = ' Ω'
+            return resistance, abbreviation
+        elif 1000 <= resistance <= 1000000:
+            abbreviation = ' kΩ'
+            return resistance / 1000, abbreviation
+        elif 1000000 <= resistance <= 1000000000:
+            abbreviation = ' MΩ'
+            return resistance / 1000000, abbreviation
+        else:  # 999 GΩ is maximum possible
+            abbreviation = ' GΩ'
+            return resistance / 1000000000, abbreviation
 
 
 ResistorCalculatorApp().run()
