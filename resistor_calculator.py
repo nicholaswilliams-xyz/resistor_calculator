@@ -141,9 +141,53 @@ class ResistorCalculatorApp(App):
                                  str(COLOUR_TO_DIGIT[self.root.ids.r4b2.text][1])) * \
                              pow(10, COLOUR_TO_DIGIT[self.root.ids.r4b3.text][1])
 
+                tolerance = 0
+                if self.root.ids.r4b4.text != '':
+                    tolerance = COLOUR_TO_TOLERANCE[self.root.ids.r4b4.text][1]
+
                 self.root.ids.r4_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
-                                              f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}"
+                                              f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
+                                              f"\n{str(tolerance * 100) + '%' if self.root.ids.r4b4.text != '' else ''}" \
+                                              f"\n{str(int(resistance * (1 - tolerance))) + ' - ' + str(int(resistance * (1 + tolerance))) + ' Ω' if self.root.ids.r4b4.text != '' else ''}"
+
+        if number_of_bands == 5:
+            if self.root.ids.r5b1.text != '' and self.root.ids.r5b2.text != '' and self.root.ids.r5b3.text != '' and self.root.ids.r5b4.text != '':
+                resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r5b1.text][1]) +
+                                 str(COLOUR_TO_DIGIT[self.root.ids.r5b2.text][1]) +
+                                 str(COLOUR_TO_DIGIT[self.root.ids.r5b3.text][1])) * \
+                             pow(10, COLOUR_TO_DIGIT[self.root.ids.r5b4.text][1])
+
+                tolerance = 0
+                if self.root.ids.r5b5.text != '':
+                    tolerance = COLOUR_TO_TOLERANCE[self.root.ids.r5b5.text][1]
+
+                self.root.ids.r5_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
+                                              f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
+                                              f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
+                                              f"\n{str(tolerance * 100) + '%' if self.root.ids.r5b5.text != '' else ''}" \
+                                              f"\n{str(int(resistance * (1 - tolerance))) + ' - ' + str(int(resistance * (1 + tolerance))) + ' Ω' if self.root.ids.r5b5.text != '' else ''}"
+
+        if number_of_bands == 6:
+            if self.root.ids.r6b1.text != '' and self.root.ids.r6b2.text != '' and self.root.ids.r6b3.text != '' and self.root.ids.r6b4.text != '':
+                resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r6b1.text][1]) +
+                                 str(COLOUR_TO_DIGIT[self.root.ids.r6b2.text][1]) +
+                                 str(COLOUR_TO_DIGIT[self.root.ids.r6b3.text][1])) * \
+                             pow(10, COLOUR_TO_DIGIT[self.root.ids.r6b4.text][1])
+
+                tolerance = 0
+                if self.root.ids.r6b5.text != '':
+                    tolerance = COLOUR_TO_TOLERANCE[self.root.ids.r6b5.text][1]
+
+                temp_co = 0
+                if self.root.ids.r6b6.text != '':
+                    temp_co = COLOUR_TO_TEMP_CO[self.root.ids.r6b6.text][1]
+
+                self.root.ids.r6_value.text = f"{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
+                                              f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
+                                              f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
+                                              f"\n{str(tolerance * 100) + '%' if self.root.ids.r6b5.text != '' else ''}" \
+                                              f"\n{str(int(resistance * (1 - tolerance))) + ' - ' + str(int(resistance * (1 + tolerance))) + ' Ω' if self.root.ids.r6b5.text != '' else ''}"
 
     def display_resistor_colours(self, resistance):
         pass
