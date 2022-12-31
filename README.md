@@ -1,7 +1,7 @@
 # Resistor Calculator
 This app has two functions:
 - Calculate resistor value using band colours
-- Show band colours corresponding inputted resistance
+- Show band colours for corresponding inputted resistance
 
 
 The calculator contains inputs for three-, four-, five-, and six-band resistors on one window. 
