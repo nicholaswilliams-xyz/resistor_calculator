@@ -169,9 +169,9 @@ class ResistorCalculatorApp(App):
         """Calculate the resistance once enough spinners have been selected"""
         if number_of_bands == 3:
             if self.root.ids.r3b1.text != '' and self.root.ids.r3b2.text != '' and self.root.ids.r3b3.text != '':
-                resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r3b1.text][1]) +
-                                 str(COLOUR_TO_DIGIT[self.root.ids.r3b2.text][1])) * \
-                             pow(10, COLOUR_TO_MULTIPLIER[self.root.ids.r3b3.text][1])
+                resistance = round(int(str(COLOUR_TO_DIGIT[self.root.ids.r3b1.text][1]) +
+                                       str(COLOUR_TO_DIGIT[self.root.ids.r3b2.text][1])) *
+                                   pow(10, COLOUR_TO_MULTIPLIER[self.root.ids.r3b3.text][1]), 10)
 
                 self.root.ids.r3_value.text = f"\n{resistance} Ω\n{str(resistance / 1000) + ' kΩ' if resistance >= 1000 else ''}" \
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
@@ -179,9 +179,9 @@ class ResistorCalculatorApp(App):
 
         if number_of_bands == 4:
             if self.root.ids.r4b1.text != '' and self.root.ids.r4b2.text != '' and self.root.ids.r4b3.text != '':
-                resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r4b1.text][1]) +
-                                 str(COLOUR_TO_DIGIT[self.root.ids.r4b2.text][1])) * \
-                             pow(10, COLOUR_TO_MULTIPLIER[self.root.ids.r4b3.text][1])
+                resistance = round(int(str(COLOUR_TO_DIGIT[self.root.ids.r4b1.text][1]) +
+                                       str(COLOUR_TO_DIGIT[self.root.ids.r4b2.text][1])) *
+                                   pow(10, COLOUR_TO_MULTIPLIER[self.root.ids.r4b3.text][1]), 10)
 
                 tolerance = 0
                 if self.root.ids.r4b4.text != '':
@@ -194,10 +194,10 @@ class ResistorCalculatorApp(App):
                                               f"\n{str(round(self.format_tolerance_resistance(resistance)[0] * (1 - tolerance), 10)) + ' - ' + str(round(self.format_tolerance_resistance(resistance)[0] * (1 + tolerance), 10)) + self.format_tolerance_resistance(resistance)[1] if self.root.ids.r4b4.text != '' else ''}"
         if number_of_bands == 5:
             if self.root.ids.r5b1.text != '' and self.root.ids.r5b2.text != '' and self.root.ids.r5b3.text != '' and self.root.ids.r5b4.text != '':
-                resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r5b1.text][1]) +
-                                 str(COLOUR_TO_DIGIT[self.root.ids.r5b2.text][1]) +
-                                 str(COLOUR_TO_DIGIT[self.root.ids.r5b3.text][1])) * \
-                             pow(10, COLOUR_TO_MULTIPLIER[self.root.ids.r5b4.text][1])
+                resistance = round(int(str(COLOUR_TO_DIGIT[self.root.ids.r5b1.text][1]) +
+                                       str(COLOUR_TO_DIGIT[self.root.ids.r5b2.text][1]) +
+                                       str(COLOUR_TO_DIGIT[self.root.ids.r5b3.text][1])) *
+                                   pow(10, COLOUR_TO_MULTIPLIER[self.root.ids.r5b4.text][1]), 10)
 
                 tolerance = 0
                 if self.root.ids.r5b5.text != '':
@@ -210,10 +210,10 @@ class ResistorCalculatorApp(App):
                                               f"\n{str(round(self.format_tolerance_resistance(resistance)[0] * (1 - tolerance), 10)) + ' - ' + str(round(self.format_tolerance_resistance(resistance)[0] * (1 + tolerance), 10)) + self.format_tolerance_resistance(resistance)[1] if self.root.ids.r5b5.text != '' else ''}"
         if number_of_bands == 6:
             if self.root.ids.r6b1.text != '' and self.root.ids.r6b2.text != '' and self.root.ids.r6b3.text != '' and self.root.ids.r6b4.text != '':
-                resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r6b1.text][1]) +
-                                 str(COLOUR_TO_DIGIT[self.root.ids.r6b2.text][1]) +
-                                 str(COLOUR_TO_DIGIT[self.root.ids.r6b3.text][1])) * \
-                             pow(10, COLOUR_TO_MULTIPLIER[self.root.ids.r6b4.text][1])
+                resistance = round(int(str(COLOUR_TO_DIGIT[self.root.ids.r6b1.text][1]) +
+                                       str(COLOUR_TO_DIGIT[self.root.ids.r6b2.text][1]) +
+                                       str(COLOUR_TO_DIGIT[self.root.ids.r6b3.text][1])) *
+                                   pow(10, COLOUR_TO_MULTIPLIER[self.root.ids.r6b4.text][1]), 10)
 
                 tolerance = 0
                 if self.root.ids.r6b5.text != '':
@@ -232,7 +232,6 @@ class ResistorCalculatorApp(App):
 
     def format_tolerance_resistance(self, resistance):
         """Format the tolerance resistance for tidiness"""
-        resistance = int(resistance)
         if resistance < 1000:
             abbreviation = ' Ω'
             return resistance, abbreviation
@@ -242,7 +241,7 @@ class ResistorCalculatorApp(App):
         elif 1000000 <= resistance <= 1000000000:
             abbreviation = ' MΩ'
             return resistance / 1000000, abbreviation
-        else:  # 999 GΩ is maximum possible
+        else:  # 999 GΩ is maximum possible allowed
             abbreviation = ' GΩ'
             return resistance / 1000000000, abbreviation
 
