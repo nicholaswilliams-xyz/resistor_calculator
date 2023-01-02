@@ -5,14 +5,14 @@ Currently works with Python interpreter 3.10
 
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.properties import ObjectProperty
 from kivy.properties import ListProperty
-from kivy.properties import StringProperty
 from kivy.core.window import Window
+from kivy.uix.textinput import TextInput
+import re
 
 __author__ = 'Nicholas Williams'
 
-RESISTOR_3_VALUES = ("1", "2.2", "2.7", "3.3", "3.9", "4.7", "5.6", "6.8", "8.2", "9.1", "10")
+UNITS = ("Ω", "kΩ", "MΩ", "GΩ")
 
 COLOUR_TO_DIGIT = {"0 Black": ((0, 0, 0, 1), 0),
                    "1 Brown": ((1.5, 0.9, 0.5, 1), 1),
@@ -56,11 +56,16 @@ COLOUR_TO_TEMP_CO = {"100 Brown": ((1.5, 0.9, 0.5, 1), 100),
                      "10 Blue": ((0, 0, 255, 1), 10),
                      "5 Violet": ((128, 0, 128, 1), 5)}
 
+PERMITTED_CHARS = {"backspace": 8,
+                   "delete": 127,
+                   "left": 276,
+                   "right": 275}
+
 
 class ResistorCalculatorApp(App):
     """ResistorCalculatorApp is a Kivy app for calculating the resistance and tolerance of a
     resistor based on the chosen colour bands"""
-    resistor_3_values = ListProperty()
+    units = ListProperty()
     colour_to_digit = ListProperty()
     colour_to_multiplier = ListProperty()
     colour_to_tolerance = ListProperty()
@@ -70,16 +75,54 @@ class ResistorCalculatorApp(App):
         """Build the Kivy app from the kv file"""
         self.title = "Resistor calculator 1.0"
         self.root = Builder.load_file('resistor_calculator.kv')
-        self.resistor_3_values = RESISTOR_3_VALUES
+        self.units = UNITS
         self.colour_to_digit = COLOUR_TO_DIGIT
         self.colour_to_multiplier = COLOUR_TO_MULTIPLIER
         self.colour_to_tolerance = COLOUR_TO_TOLERANCE
         self.colour_to_temp_co = COLOUR_TO_TEMP_CO
+
         Window.size = (1200, 1000)
 
         return self.root
 
+    class FloatInput(TextInput):
+        """FloatInput is a subclass of TextInput that allows only numbers 0-9 and one decimal place."""
+        pat = re.compile('[^0-9]')
+
+        def keyboard_on_key_down(self, window, keycode, text, modifiers):
+            """Allow backspace to be pressed"""
+
+            if keycode[0] in PERMITTED_CHARS.values():
+                self.readonly = False
+                TextInput.keyboard_on_key_down(self, window, keycode, text, modifiers)
+
+            if len(self.text) >= self.max_char:
+                self.readonly = True
+                if keycode[0] == 48 or keycode[0] == 256:  # character '0' is represented by ASCII integer 48
+                    if len(self.text) < self.max_char + 1:
+                        self.readonly = False
+                        TextInput.keyboard_on_key_down(self, window, keycode, text, modifiers)
+                    else:
+                        self.readonly = True
+                        TextInput.keyboard_on_key_down(self, window, keycode, text, modifiers)
+
+        def insert_text(self, substring, from_undo=False):
+            pat = self.pat
+            if '.' in self.text:
+                s = re.sub(pat, '', substring)
+            else:
+                s = '.'.join(
+                    re.sub(pat, '', s)
+                    for s in substring.split('.', 1)
+                )
+
+            return super().insert_text(s, from_undo=from_undo)
+
+    def convert_value_to_colour_bands(self, value):
+        print(value)
+
     def return_band_colour(self, band_type, colour_name):
+        """Return the colour for the corresponding band based on the spinner selection."""
         if band_type == "digit":
             try:
                 return COLOUR_TO_DIGIT[colour_name][0]
@@ -105,6 +148,7 @@ class ResistorCalculatorApp(App):
                 return f"{colour_name} is not a key in the 'colour_to_temp_co' dictionary."
 
     def calculate_resistance(self, number_of_bands):
+        """Calculate the resistance once enough spinners have been selected"""
         if number_of_bands == 3:
             if self.root.ids.r3b1.text != '' and self.root.ids.r3b2.text != '' and self.root.ids.r3b3.text != '':
                 resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r3b1.text][1]) +
@@ -129,7 +173,7 @@ class ResistorCalculatorApp(App):
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
                                               f"\n\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r4b4.text != '' else ''}" \
-                                              f"\n{str(round(self.format_resistance(resistance)[0] * (1 - tolerance), 10)) + ' - ' + str(round(self.format_resistance(resistance)[0] * (1 + tolerance), 10)) + self.format_resistance(resistance)[1] if self.root.ids.r4b4.text != '' else ''}"
+                                              f"\n{str(round(self.format_tolerance_resistance(resistance)[0] * (1 - tolerance), 10)) + ' - ' + str(round(self.format_tolerance_resistance(resistance)[0] * (1 + tolerance), 10)) + self.format_tolerance_resistance(resistance)[1] if self.root.ids.r4b4.text != '' else ''}"
         if number_of_bands == 5:
             if self.root.ids.r5b1.text != '' and self.root.ids.r5b2.text != '' and self.root.ids.r5b3.text != '' and self.root.ids.r5b4.text != '':
                 resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r5b1.text][1]) +
@@ -145,7 +189,7 @@ class ResistorCalculatorApp(App):
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
                                               f"\n\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r5b5.text != '' else ''}" \
-                                              f"\n{str(round(self.format_resistance(resistance)[0] * (1 - tolerance), 10)) + ' - ' + str(round(self.format_resistance(resistance)[0] * (1 + tolerance), 10)) + self.format_resistance(resistance)[1] if self.root.ids.r5b5.text != '' else ''}"
+                                              f"\n{str(round(self.format_tolerance_resistance(resistance)[0] * (1 - tolerance), 10)) + ' - ' + str(round(self.format_tolerance_resistance(resistance)[0] * (1 + tolerance), 10)) + self.format_tolerance_resistance(resistance)[1] if self.root.ids.r5b5.text != '' else ''}"
         if number_of_bands == 6:
             if self.root.ids.r6b1.text != '' and self.root.ids.r6b2.text != '' and self.root.ids.r6b3.text != '' and self.root.ids.r6b4.text != '':
                 resistance = int(str(COLOUR_TO_DIGIT[self.root.ids.r6b1.text][1]) +
@@ -165,10 +209,11 @@ class ResistorCalculatorApp(App):
                                               f"\n{str(resistance / 1000000) + ' MΩ' if resistance >= 1000000 else ''}" \
                                               f"\n{str(resistance / 1000000000) + ' GΩ' if resistance >= 1000000000 else ''}" \
                                               f"\n\n{'±' + str(tolerance * 100) + ' %' if self.root.ids.r6b5.text != '' else ''}" \
-                                              f"\n{str(round(self.format_resistance(resistance)[0] * (1 - tolerance), 10)) + ' - ' + str(round(self.format_resistance(resistance)[0] * (1 + tolerance), 10)) + self.format_resistance(resistance)[1] if self.root.ids.r6b5.text != '' else ''}" \
+                                              f"\n{str(round(self.format_tolerance_resistance(resistance)[0] * (1 - tolerance), 10)) + ' - ' + str(round(self.format_tolerance_resistance(resistance)[0] * (1 + tolerance), 10)) + self.format_tolerance_resistance(resistance)[1] if self.root.ids.r6b5.text != '' else ''}" \
                                               f"\n\n{str(temp_co) + ' ppm/°C' if self.root.ids.r6b6.text != '' else ''}"
 
-    def format_resistance(self, resistance):
+    def format_tolerance_resistance(self, resistance):
+        """Format the tolerance resistance for tidiness"""
         resistance = int(resistance)
         if resistance < 1000:
             abbreviation = ' Ω'

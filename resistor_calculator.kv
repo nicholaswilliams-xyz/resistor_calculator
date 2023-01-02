@@ -15,6 +15,19 @@ BoxLayout:
                 text: "3 "
                 font_size: 36
         BoxLayout:
+            FloatInput:
+                pos_hint_y: 0.5
+                halign: 'center'
+                id: r3_text
+                max_char: 2
+                size_hint_y: 0.13
+                multiline: False
+                on_text: app.convert_value_to_colour_bands(r3_text.text)
+            Spinner:
+                id: r3_unit
+                values: app.units
+                size_hint_y: 0.13
+        BoxLayout:
             orientation: 'vertical'
             Label:
                 size_hint_y: 0.2
