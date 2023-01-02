@@ -12,7 +12,12 @@ import re
 
 __author__ = 'Nicholas Williams'
 
-UNITS = ("Ω", "kΩ", "MΩ", "GΩ")
+NON_ZERO_NUMBERS = ("1", "2", "3", "4", "5", "6", "7", "8", "9")
+
+UNITS_TO_POWER = {"Ω": 0,
+                  "kΩ": 3,
+                  "MΩ": 6,
+                  "GΩ": 9}
 
 COLOUR_TO_DIGIT = {"0 Black": ((0, 0, 0, 1), 0),
                    "1 Brown": ((1.5, 0.9, 0.5, 1), 1),
@@ -75,7 +80,7 @@ class ResistorCalculatorApp(App):
         """Build the Kivy app from the kv file"""
         self.title = "Resistor calculator 1.0"
         self.root = Builder.load_file('resistor_calculator.kv')
-        self.units = UNITS
+        self.units = UNITS_TO_POWER
         self.colour_to_digit = COLOUR_TO_DIGIT
         self.colour_to_multiplier = COLOUR_TO_MULTIPLIER
         self.colour_to_tolerance = COLOUR_TO_TOLERANCE
@@ -96,6 +101,7 @@ class ResistorCalculatorApp(App):
                 self.readonly = False
                 TextInput.keyboard_on_key_down(self, window, keycode, text, modifiers)
 
+            print(self.text)
             if len(self.text) >= self.max_char:
                 self.readonly = True
                 if keycode[0] == 48 or keycode[0] == 256:  # character '0' is represented by ASCII integer 48
@@ -118,8 +124,20 @@ class ResistorCalculatorApp(App):
 
             return super().insert_text(s, from_undo=from_undo)
 
-    def convert_value_to_colour_bands(self, value):
-        print(value)
+    def find_colour_bands(self, digits, unit):
+        pass
+        # if unit != '' and digits != '':
+        #     print(f"digits: '{digits}', power: '{UNITS_TO_POWER[unit]}'")
+        #     resistance = int(digits) * pow(10, UNITS_TO_POWER[unit])
+        #
+        #     bands = 3
+        #     if bands == 3:
+        #         # print(list(COLOUR_TO_DIGIT.values())[int(str(resistance)[0])])
+        #         # print(list(COLOUR_TO_DIGIT.keys())[int(str(resistance)[0])])
+        #
+        #         self.root.ids.r3b1.text = list(COLOUR_TO_DIGIT.keys())[int(str(resistance)[0])]
+        #         self.root.ids.r3b2.text = list(COLOUR_TO_DIGIT.keys())[int(str(resistance)[1])]
+        #         self.root.ids.r3b3.text = list(COLOUR_TO_MULTIPLIER.keys())[int(str(resistance)[2]) + 1]
 
     def return_band_colour(self, band_type, colour_name):
         """Return the colour for the corresponding band based on the spinner selection."""
