@@ -25,16 +25,16 @@ BoxLayout:
                 id: r3_digits
                 size_hint_y: 0.065
                 halign: 'center'
-                max_char: 3
+                max_char: 2
                 multiline: False
-                on_text: app.find_colour_bands(r3_digits.text, r3_unit.text, )
+                on_text: app.find_colour_bands(r3_digits.text, r3_unit.text, 3)
             Spinner:
                 id: r3_unit
                 size_hint_y: 0.065
                 values: app.units
                 outline_color: (0,0,0)
                 outline_width: 5
-                on_text: app.find_colour_bands(r3_digits.text, r3_unit.text)
+                on_text: app.find_colour_bands(r3_digits.text, r3_unit.text, 3)
         BoxLayout:
             orientation: 'vertical'
             Label:

@@ -124,20 +124,33 @@ class ResistorCalculatorApp(App):
 
             return super().insert_text(s, from_undo=from_undo)
 
-    def find_colour_bands(self, digits, unit):
-        pass
-        # if unit != '' and digits != '':
-        #     print(f"digits: '{digits}', power: '{UNITS_TO_POWER[unit]}'")
-        #     resistance = int(digits) * pow(10, UNITS_TO_POWER[unit])
-        #
-        #     bands = 3
-        #     if bands == 3:
-        #         # print(list(COLOUR_TO_DIGIT.values())[int(str(resistance)[0])])
-        #         # print(list(COLOUR_TO_DIGIT.keys())[int(str(resistance)[0])])
-        #
-        #         self.root.ids.r3b1.text = list(COLOUR_TO_DIGIT.keys())[int(str(resistance)[0])]
-        #         self.root.ids.r3b2.text = list(COLOUR_TO_DIGIT.keys())[int(str(resistance)[1])]
-        #         self.root.ids.r3b3.text = list(COLOUR_TO_MULTIPLIER.keys())[int(str(resistance)[2]) + 1]
+    def find_colour_bands(self, digits, unit, bands):
+        """Change colour bands depending on typed value."""
+        # pass
+        if unit != '' and digits != '':
+            # print(f"digits: '{digits}', power: '{UNITS_TO_POWER[unit]}'")
+            if '.' in digits:
+                digits = digits.split('.')
+                if len(digits) == 1:
+                    digits = ['0', digits[0]]
+                    mantissa = int(digits[0]) + int(digits[1])
+                    resistance = mantissa * pow(10, UNITS_TO_POWER[unit])
+                else:
+                    print(digits)
+                    if digits[1] == '':
+                        digits[1] = 0
+                    mantissa = int(digits[0]) + int(digits[1])/10
+                    resistance = mantissa * pow(10, UNITS_TO_POWER[unit])
+            else:
+                mantissa = int(digits)
+                resistance = mantissa * pow(10, UNITS_TO_POWER[unit])
+
+            if bands == 3:
+                print(f"digits: '{digits}', mantissa: '{mantissa}', power: '{UNITS_TO_POWER[unit]}', resistance: '{resistance}'")
+                self.root.ids.r3b1.text = list(COLOUR_TO_DIGIT.keys())[int(str(digits[0]))]
+                self.root.ids.r3b2.text = list(COLOUR_TO_DIGIT.keys())[0] if len(str(mantissa)) < 2 else list(COLOUR_TO_DIGIT.keys())[int(str(digits[1]))]
+                self.root.ids.r3b3.text = list(COLOUR_TO_MULTIPLIER.keys())[UNITS_TO_POWER[unit] - 2] if resistance < 10 else list(COLOUR_TO_MULTIPLIER.keys())[UNITS_TO_POWER[unit] - 1]
+
 
     def return_band_colour(self, band_type, colour_name):
         """Return the colour for the corresponding band based on the spinner selection."""
