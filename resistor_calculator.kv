@@ -25,13 +25,15 @@ BoxLayout:
                 id: r3_digits
                 size_hint_y: 0.065
                 halign: 'center'
-                max_char: 2
+                max_char: 3
                 multiline: False
                 on_text: app.find_colour_bands(r3_digits.text, r3_unit.text, )
             Spinner:
                 id: r3_unit
                 size_hint_y: 0.065
                 values: app.units
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: app.find_colour_bands(r3_digits.text, r3_unit.text)
         BoxLayout:
             orientation: 'vertical'
@@ -41,6 +43,8 @@ BoxLayout:
             Spinner:
                 id: r3b1  # ID for the first band of a three-band resistor
                 values: app.colour_to_digit
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r3b1.background_color = app.return_band_colour("digit", r3b1.text)
                 on_background_color: app.calculate_resistance(3)
         BoxLayout:
@@ -51,6 +55,8 @@ BoxLayout:
             Spinner:
                 id: r3b2
                 values: app.colour_to_digit
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r3b2.background_color = app.return_band_colour("digit", r3b2.text)
                 on_background_color: app.calculate_resistance(3)
         BoxLayout:
@@ -61,6 +67,8 @@ BoxLayout:
             Spinner:
                 id: r3b3
                 values: app.colour_to_multiplier
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r3b3.background_color = app.return_band_colour("multiplier", r3b3.text)
                 on_background_color: app.calculate_resistance(3)
 
@@ -89,6 +97,8 @@ BoxLayout:
             Spinner:
                 id: r4b1
                 values: app.colour_to_digit
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r4b1.background_color = app.return_band_colour("digit", r4b1.text)
                 on_background_color: app.calculate_resistance(4)
         BoxLayout:
@@ -99,6 +109,8 @@ BoxLayout:
             Spinner:
                 id: r4b2
                 values: app.colour_to_digit
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r4b2.background_color = app.return_band_colour("digit", r4b2.text)
                 on_background_color: app.calculate_resistance(4)
         BoxLayout:
@@ -109,6 +121,8 @@ BoxLayout:
             Spinner:
                 id: r4b3
                 values: app.colour_to_multiplier
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r4b3.background_color = app.return_band_colour("multiplier", r4b3.text)
                 on_background_color: app.calculate_resistance(4)
         BoxLayout:
@@ -119,6 +133,8 @@ BoxLayout:
             Spinner:
                 id: r4b4
                 values: app.colour_to_tolerance
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r4b4.background_color = app.return_band_colour("tolerance", r4b4.text)
                 on_background_color: app.calculate_resistance(4)
 
@@ -146,6 +162,8 @@ BoxLayout:
             Spinner:
                 id: r5b1
                 values: app.colour_to_digit
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r5b1.background_color = app.return_band_colour("digit", r5b1.text)
                 on_background_color: app.calculate_resistance(5)
         BoxLayout:
@@ -156,6 +174,8 @@ BoxLayout:
             Spinner:
                 id: r5b2
                 values: app.colour_to_digit
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r5b2.background_color = app.return_band_colour("digit", r5b2.text)
                 on_background_color: app.calculate_resistance(5)
         BoxLayout:
@@ -166,6 +186,8 @@ BoxLayout:
             Spinner:
                 id: r5b3
                 values: app.colour_to_digit
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r5b3.background_color = app.return_band_colour("digit", r5b3.text)
                 on_background_color: app.calculate_resistance(5)
         BoxLayout:
@@ -176,6 +198,8 @@ BoxLayout:
             Spinner:
                 id: r5b4
                 values: app.colour_to_multiplier
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r5b4.background_color = app.return_band_colour("multiplier", r5b4.text)
                 on_background_color: app.calculate_resistance(5)
         BoxLayout:
@@ -186,6 +210,8 @@ BoxLayout:
             Spinner:
                 id: r5b5
                 values: app.colour_to_tolerance
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r5b5.background_color = app.return_band_colour("tolerance", r5b5.text)
                 on_background_color: app.calculate_resistance(5)
 
@@ -212,6 +238,8 @@ BoxLayout:
             Spinner:
                 id: r6b1
                 values: app.colour_to_digit
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r6b1.background_color = app.return_band_colour("digit", r6b1.text)
                 on_background_color: app.calculate_resistance(6)
         BoxLayout:
@@ -222,6 +250,8 @@ BoxLayout:
             Spinner:
                 id: r6b2
                 values: app.colour_to_digit
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r6b2.background_color = app.return_band_colour("digit", r6b2.text)
                 on_background_color: app.calculate_resistance(6)
         BoxLayout:
@@ -232,6 +262,8 @@ BoxLayout:
             Spinner:
                 id: r6b3
                 values: app.colour_to_digit
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r6b3.background_color = app.return_band_colour("digit", r6b3.text)
                 on_background_color: app.calculate_resistance(6)
         BoxLayout:
@@ -242,6 +274,8 @@ BoxLayout:
             Spinner:
                 id: r6b4
                 values: app.colour_to_multiplier
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r6b4.background_color = app.return_band_colour("multiplier", r6b4.text)
                 on_background_color: app.calculate_resistance(6)
         BoxLayout:
@@ -252,6 +286,8 @@ BoxLayout:
             Spinner:
                 id: r6b5
                 values: app.colour_to_tolerance
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r6b5.background_color = app.return_band_colour("tolerance", r6b5.text)
                 on_background_color: app.calculate_resistance(6)
         BoxLayout:
@@ -262,6 +298,8 @@ BoxLayout:
             Spinner:
                 id: r6b6
                 values: app.colour_to_temp_co
+                outline_color: (0,0,0)
+                outline_width: 5
                 on_text: r6b6.background_color = app.return_band_colour("temp_co", r6b6.text)
                 on_background_color: app.calculate_resistance(6)
 

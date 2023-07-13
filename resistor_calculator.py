@@ -102,7 +102,7 @@ class ResistorCalculatorApp(App):
                 TextInput.keyboard_on_key_down(self, window, keycode, text, modifiers)
 
             print(self.text)
-            if len(self.text) >= self.max_char:
+            if len(self.text.replace(".", '')) >= self.max_char:  # Remove full-stop
                 self.readonly = True
                 if keycode[0] == 48 or keycode[0] == 256:  # character '0' is represented by ASCII integer 48
                     if len(self.text) < self.max_char + 1:
